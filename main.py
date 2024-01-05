@@ -10,6 +10,7 @@ device = (
     if torch.backends.mps.is_available()
     else "cpu"
 )
+torch.device(device)
 print(f"Using {device} device")
 
 model_path = "./models/model.pt"
@@ -68,7 +69,7 @@ class MyDataset(Dataset):
 
 def train():
     num_epochs = 100
-    model = Net().train().to(device)
+    model = Net().train()
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.02)
 
@@ -90,7 +91,7 @@ def train():
 
 def eval():
     model: nn.Module = torch.load(model_path)
-    model.eval().to(device)
+    model.eval()
 
     input_tensor = torch.tensor([
         [[0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]],
